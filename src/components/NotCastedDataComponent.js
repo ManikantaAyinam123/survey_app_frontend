@@ -6,15 +6,17 @@ import VoterTable from './VoterTable';
 
 const CastedDataComponent = () => {
   const dispatch = useDispatch();
-  const  castedData = useSelector((state) => state.data); // Assuming you have separate state for casted data
+  const  nonCastedData = useSelector((state) => state.filterByCastedStatusReducer?.data);
 
   useEffect(() => {
     dispatch(filterByCastedStatusAction(false)); 
   }, [dispatch]);
 
   return (
-    <VoterTable voters={castedData} />
-  );
+  <>
+  <VoterTable voters={nonCastedData} />
+  </>
+    );
 };
 
 export default CastedDataComponent;

@@ -5,7 +5,7 @@ import { filterByCastedStatusAction } from '../redux/actions/action';
 import VoterTable from './VoterTable';
 const CastedDataComponent = ({ section }) => { // Receive section as prop
   const dispatch = useDispatch();
-  const castedData  = useSelector((state) => state.data);
+  const castedData  = useSelector((state) => state.filterByCastedStatusReducer?.data);
   console.log('this is castedData --->', castedData)
 
   useEffect(() => {
@@ -14,7 +14,6 @@ const CastedDataComponent = ({ section }) => { // Receive section as prop
 
   return (
     <>
-    <VoterTable voters={castedData} />
     </>
 
    

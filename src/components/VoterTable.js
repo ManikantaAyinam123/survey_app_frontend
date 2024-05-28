@@ -5,6 +5,7 @@ import VoterService from './VoterService';
 import ModalForm from './ModalForm';
 
 const VoterTable = ({ voters }) => {
+  console.log('this is table component ----> ', voters)
   const [userType, setUserType] = useState(localStorage.getItem('userType')); 
   const [selectedVoter, setSelectedVoter] = useState(null);
   const [open, setOpen] = useState(false);
