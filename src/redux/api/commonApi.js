@@ -1,0 +1,1 @@
+export const all_voters="http://localhost:3000/voters";
