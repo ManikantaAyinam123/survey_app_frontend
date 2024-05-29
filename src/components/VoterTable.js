@@ -3,8 +3,11 @@ import {Icon} from "@iconify/react";
 import { Table, Grid, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal, Box, Typography, TextField } from '@mui/material';
 import VoterService from './VoterService';
 import ModalForm from './ModalForm';
+import { updateVoterAction } from '../redux/actions/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const VoterTable = ({ voters }) => {
+  const dispatch = useDispatch();
   console.log('this is table component ----> ', voters)
   const [userType, setUserType] = useState(localStorage.getItem('userType')); 
   const [selectedVoter, setSelectedVoter] = useState(null);
@@ -14,10 +17,14 @@ const VoterTable = ({ voters }) => {
     age: '',
     sex: '',
     state: '',
+    constituency: '',
     party: '',
     casted: false,
     figured_by: ''
   });
+
+    const updateData = useSelector((state) => state); 
+    console.log("this is updated data",updateData);
 
   const handleOpen = (voter) => {
     setSelectedVoter(voter);
@@ -35,17 +42,16 @@ const VoterTable = ({ voters }) => {
   };
 
   const handleSubmit = () => {
-    // Filter the formData to exclude unwanted fields
+    
     const figuredBy = localStorage.getItem('name');
-    const { voter_name, age, sex, state, party, casted, figured_by } = formData;
-    const updatedFields = { voter_name, age, sex, state, party, casted, figured_by: figuredBy };
+    const { voter_name, age, sex, state,constituency, party, casted, figured_by } = formData;
+    const updatedFields = { voter_name, age, sex, state,constituency , party, casted, figured_by: figuredBy };
+    console.log(updatedFields);
 
-    VoterService.updateVoter(selectedVoter.id, updatedFields)
-      .then(response => {
-        console.log('Voter updated successfully:', response.data);
-        setOpen(false);
-      })
-      .catch(error => console.error('Error updating voter:', error));
+     dispatch(updateVoterAction(selectedVoter.id, { voter: updatedFields }));
+      setOpen(false);
+      
+
   };
 
   return (
@@ -68,8 +74,8 @@ const VoterTable = ({ voters }) => {
           <TableBody sx={{backgroundColor:'white'}}>
             {voters.map((voter) => (
               <TableRow key={voter.id} sx={{
-        '&:last-child td, &:last-child th': { border: 0 },
-                                    '& td, & th': { borderBottom: `1px solid black` },
+               '&:last-child td, &:last-child th': { border: 0 },
+               '& td, & th': { borderBottom: `1px solid black` },
                                   }}>
                 <TableCell>{voter.id}</TableCell>
                 <TableCell>{voter.voter_name}</TableCell>

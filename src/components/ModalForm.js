@@ -61,26 +61,35 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
               fullWidth
             />
           </Grid>
+           <Grid item xs={12} sm={6}>
+            <TextField
+              name="constituency"
+              label="Constituency"
+              value={formData.constituency}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
           <Grid item xs={12} sm={6}>
-      <FormControl fullWidth>
-        <InputLabel id="party-label">Party</InputLabel>
-        <Select
-          labelId="party-label"
-          name="party"
-          id="party"
-           label="party"
-          value={formData.party}
-          onChange={handleChange}
-          fullWidth
-        >
-          <MenuItem value="TDP">TDP</MenuItem>
-          <MenuItem value="YSRCP">YSRCP</MenuItem>
-          <MenuItem value="BJP">BJP</MenuItem>
-          <MenuItem value="NOTA">NOTA</MenuItem>
-        </Select>
-      </FormControl>
-    </Grid>
-          <Grid item xs={12} sm={6} sx={{marginBottom:'10px'}}>
+            <FormControl fullWidth>
+              <InputLabel id="party-label">Party</InputLabel>
+              <Select
+                labelId="party-label"
+                name="party"
+                id="party"
+                label="Party"
+                value={formData.party}
+                onChange={handleChange}
+                fullWidth
+              >
+                <MenuItem value="TDP">TDP</MenuItem>
+                <MenuItem value="YSRCP">YSRCP</MenuItem>
+                <MenuItem value="BJP">BJP</MenuItem>
+                <MenuItem value="NOTA">NOTA</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} sx={{ marginBottom: '10px' }}>
             <FormControl fullWidth>
               <InputLabel id="casted-label">Casted</InputLabel>
               <Select
@@ -91,12 +100,12 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
                 label="Casted"
                 onChange={handleChange}
               >
-               
                 <MenuItem value={true}>Yes</MenuItem>
                 <MenuItem value={false}>No</MenuItem>
               </Select>
-             </FormControl>
+            </FormControl>
           </Grid>
+         
         </Grid>
         <Grid container sx={{ justifyContent: 'end' }}>
           <Button

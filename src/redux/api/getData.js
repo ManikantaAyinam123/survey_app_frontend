@@ -3,6 +3,7 @@ import axios from 'axios';
 const all_voters = "http://localhost:3000/voters";
 const search_by_name = "http://localhost:3000/voters/search_by_name";
 const filter_casted_status = "http://localhost:3000/voters/filter_casted_status";
+const baseURL = 'http://localhost:3000/voters';
 
 export const fetchAllVotersData = async (page) => {
   try {
@@ -30,14 +31,29 @@ export const searchByNameData = async (name) => {
   }
 };
 
-export const filterByCastedStatusData = async (casted, page = 1) => {
+export const filterByCastedStatusData = async (casted, page) => {
   try {
+    console.log("Filter by Casted Status Data from API", page);
     const response = await axios.get(`${filter_casted_status}?casted=${casted}&page=${page}`);
     const data = response.data;
-    console.log("Filter by Casted Status Data from API", data);
+    console.log("Filter by Casted Status Data from API", response);
     return data;
   } catch (error) {
     console.error('Error filtering by casted status:', error);
     throw error;
   }
 };
+
+export const updateVoter = async (id, updatedFields) => {
+  
+  try {
+    const response = await axios.put(`http://localhost:3000/voters/${id}`, updatedFields);
+    console.log('Update voter response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating voter:', error);
+    throw error;
+  }
+};
+
+

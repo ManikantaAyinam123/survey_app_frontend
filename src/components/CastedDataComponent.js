@@ -1,22 +1,40 @@
-// CastedDataComponent.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByCastedStatusAction } from '../redux/actions/action';
 import VoterTable from './VoterTable';
-const CastedDataComponent = ({ section }) => { // Receive section as prop
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { Box } from '@mui/material';
+
+const CastedDataComponent = ({ section }) => {
   const dispatch = useDispatch();
-  const castedData  = useSelector((state) => state.filterByCastedStatusReducer?.data);
-  console.log('this is castedData --->', castedData)
+  const { data: castedData, currentPage, totalPages } = useSelector((state) => state.filterByCastedStatusReducer);
+
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-      dispatch(filterByCastedStatusAction(true));
-  }, [dispatch, section]); 
+    dispatch(filterByCastedStatusAction(true, page));
+    console.log("useEffect triggered with page:", page);
+  }, [dispatch, page]); 
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <>
+      <VoterTable voters={castedData} />
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '5px' }}>
+        <Stack spacing={2} direction="row">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handleChangePage}
+            color="primary"
+          />
+        </Stack>
+      </Box>
     </>
-
-   
   );
 };
 

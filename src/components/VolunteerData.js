@@ -1,37 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, TextField, Button } from '@mui/material';
-import VoterService from './VoterService';
 import VoterTable from './VoterTable';
+import { searchByNameAction } from '../redux/actions/action';
 
 const VolunteerData = () => {
-  const [voters, setVoters] = useState([]);
+  const dispatch = useDispatch();
   const [searchName, setSearchName] = useState('');
+  const [filteredVoters, setFilteredVoters] = useState([]);
+  const voters = useSelector((state) => state.searchByNameReducer?.data );
 
+  // Update filteredVoters whenever voters state changes
   useEffect(() => {
-    fetchNotCastedVotes();
+    if (voters) {
+      setFilteredVoters(voters.filter(item => !item.casted));
+    }
   }, [voters]);
 
-  const fetchNotCastedVotes = () => {
-    VoterService.filterByCastedStatus(false)
-      .then(response => {
-        setVoters(response.data);
-      })
-      .catch(error => console.error('Error fetching not casted voters:', error));
+  const handleSearch = () => {
+    dispatch(searchByNameAction(searchName));
+      setSearchName(''); 
+    setFilteredVoters([]); 
   };
-
-const handleSearch = () => {
-  if (searchName.trim() === '') {
-    fetchNotCastedVotes();
-  } else {
-    VoterService.searchByName(searchName)
-      .then(response => {
-        const filteredData = response.data.filter(item => !item.casted);
-        setVoters(filteredData);
-      })
-      .catch(error => console.error('Error searching voters:', error));
-  }
-};
-
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -42,18 +32,13 @@ const handleSearch = () => {
         Search Voter by Name
       </Typography>
       <Box sx={{ display: 'flex', mb: 3 }}>
-       <TextField
-  label="Name"
-  variant="outlined"
-  value={searchName}
-  onChange={(e) => {
-    setSearchName(e.target.value);
-    if (e.target.value.trim() === '') {
-      fetchNotCastedVotes();
-    }
-  }}
-  sx={{ mr: 2 }}
-/>
+        <TextField
+          label="Name"
+          variant="outlined"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          sx={{ mr: 2 }}
+        />
         <Button
           variant="contained"
           onClick={handleSearch}
@@ -70,7 +55,11 @@ const handleSearch = () => {
           Search
         </Button>
       </Box>
-      <VoterTable voters={voters} />
+      {filteredVoters.length === 0 ? (
+        <Typography>No Data </Typography>
+      ) : (
+        <VoterTable voters={filteredVoters} />
+      )}
     </Box>
   );
 };
