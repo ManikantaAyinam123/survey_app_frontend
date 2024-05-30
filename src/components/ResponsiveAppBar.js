@@ -41,10 +41,8 @@ const ResponsiveAppBar = () => {
                     Voter Data
                 </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center',mr:2 }}>
-                          
-                                 <Icon icon="lets-icons:user-alt-fill" width="24" height="24" style={{ color: 'white' }} />
-                         
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Icon icon="lets-icons:user-alt-fill" width="24" height="24" style={{ color: 'white' }} />
+                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
                            <Typography variant="subtitle1" sx={{ marginRight: 1, color: 'white', fontWeight: 'bold', fontSize: '20px' }}>
                              {localStorage.getItem('name')}
                                  
@@ -52,7 +50,7 @@ const ResponsiveAppBar = () => {
                           </Box>
                      </Box>
                
-                <Button color="inherit" onClick={handleLogout} variant="outlined" sx={{ borderColor: 'white', color: 'white' }}>
+                <Button color="inherit" onClick={handleLogout}  sx={{ backgroundColor: 'white', color: '#EE8832',textTransform: 'none',letterSpacing:'1.3px',fontSize:'15px',padding:'5px 20px',fontWeight:'bold' }}>
                     Logout
                 </Button>
             </Toolbar>

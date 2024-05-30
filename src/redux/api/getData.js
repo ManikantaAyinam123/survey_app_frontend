@@ -45,8 +45,8 @@ export const filterByCastedStatusData = async (casted, page) => {
 };
 
 export const updateVoter = async (id, updatedFields) => {
-  
-  try {
+
+try {
     const response = await axios.put(`http://localhost:3000/voters/${id}`, updatedFields);
     console.log('Update voter response:', response.data);
     return response.data;

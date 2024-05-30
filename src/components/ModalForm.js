@@ -61,7 +61,7 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
               fullWidth
             />
           </Grid>
-           <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="constituency"
               label="Constituency"
@@ -105,7 +105,6 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
               </Select>
             </FormControl>
           </Grid>
-         
         </Grid>
         <Grid container sx={{ justifyContent: 'end' }}>
           <Button

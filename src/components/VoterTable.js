@@ -51,14 +51,13 @@ const VoterTable = ({ voters }) => {
      dispatch(updateVoterAction(selectedVoter.id, { voter: updatedFields }));
       setOpen(false);
       
-
   };
 
   return (
     <>
-      <TableContainer >
-        <Table sx={{ minWidth: 650 , border:'1px solid black'}} aria-label="simple table">
-          <TableHead sx={{backgroundColor:'black',}}>
+      <TableContainer sx={{ boxShadow: '0px 0px 5px #888888',borderRadius:'15px'}}>
+        <Table sx={{ minWidth: 650 , }} aria-label="simple table">
+          <TableHead sx={{backgroundColor:'#EE8832',}}>
             <TableRow>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>ID</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Name</TableCell>
@@ -71,12 +70,9 @@ const VoterTable = ({ voters }) => {
               {userType === 'volunteer' && <TableCell sx={{fontWeight:'bold',color:'white'}}>Action </TableCell>} 
             </TableRow>
           </TableHead>
-          <TableBody sx={{backgroundColor:'white'}}>
+          <TableBody sx={{}} >
             {voters.map((voter) => (
-              <TableRow key={voter.id} sx={{
-               '&:last-child td, &:last-child th': { border: 0 },
-               '& td, & th': { borderBottom: `1px solid black` },
-                                  }}>
+              <TableRow key={voter.id} sx={{ '&:nth-child(even)': { backgroundColor: '#fef2ea' } }}>
                 <TableCell>{voter.id}</TableCell>
                 <TableCell>{voter.voter_name}</TableCell>
                 <TableCell>{voter.age}</TableCell>

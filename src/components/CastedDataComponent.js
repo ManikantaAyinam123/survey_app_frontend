@@ -24,7 +24,7 @@ const CastedDataComponent = ({ section }) => {
   return (
     <>
       <VoterTable voters={castedData} />
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '5px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '10px' }}>
         <Stack spacing={2} direction="row">
           <Pagination
             count={totalPages}

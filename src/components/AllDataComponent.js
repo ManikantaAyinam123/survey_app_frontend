@@ -23,13 +23,14 @@ const AllDataComponent = () => {
   return (
     <> 
       <VoterTable voters={allVotersdata} />
-      <Box sx={{  display: 'flex', justifyContent: 'center',mt:'5px' }}>
+      
+  <Box sx={{  display: 'flex', justifyContent: 'center',mt:'10px' }}>
      <Stack spacing={2} direction="row">
     <Pagination 
       count={totalPages} 
       page={page} 
       onChange={handleChangePage} 
-      color="primary"
+       sx={{ '& .MuiPaginationItem-page.Mui-selected': { backgroundColor: '#EE8832',color:'#ffffff' } }}
     />
   </Stack>
 </Box>

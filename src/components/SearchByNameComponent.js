@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchByNameAction } from '../redux/actions/action';
@@ -10,33 +9,31 @@ const SearchByNameComponent = () => {
   const [searchName, setSearchName] = useState('');
   const searchData = useSelector((state) => state.searchByNameReducer?.data || []) 
 
-  console.log('this is legth of search data --->', searchData);
+  console.log('this is length of search data --->', searchData);
   const handleSearch = () => {
     dispatch(searchByNameAction(searchName));
   };
-
-   let nodataimg = searchData.length > 0 ? false : true ; 
+ 
 
   return (
-    <Box >
-      <TextField
+    <Box>
+     
+         <TextField
+        size="small"
         label="Name"
         variant="outlined"
         value={searchName}
         onChange={(e) => setSearchName(e.target.value)}
         sx={{ mr: 2 }}
       />
-      <Button sx={{padding:'15px',marginBottom:'25px'}}variant="contained" onClick={handleSearch}>
+      <Button sx={{ padding: '8px', marginBottom: '25px', textTransform: 'none' }} variant="contained" onClick={handleSearch}>
         Search
       </Button>
-      { nodataimg ? (
-      <>
-      <Typography>No Data found</Typography>
-      </>
-      ):(
-      <>
-      <VoterTable voters={searchData} />
-      </>
+     
+     
+      
+      {searchName.trim() !== '' && (
+        <VoterTable voters={searchData} />
       )}
     </Box>
   );

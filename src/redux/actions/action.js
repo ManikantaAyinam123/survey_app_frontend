@@ -20,6 +20,7 @@ export const fetchAllVotersAction = (page = 1) => {
 };
 
 export const searchByNameAction = (searchName) => {
+  console.log("name in action",searchName);
   return async (dispatch) => {
     dispatch({ type: SEARCH_BY_NAME_REQUEST });
     try {

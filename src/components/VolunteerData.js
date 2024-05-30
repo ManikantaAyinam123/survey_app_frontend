@@ -8,7 +8,7 @@ const VolunteerData = () => {
   const dispatch = useDispatch();
   const [searchName, setSearchName] = useState('');
   const [filteredVoters, setFilteredVoters] = useState([]);
-  const voters = useSelector((state) => state.searchByNameReducer?.data );
+  const voters = useSelector((state) => state.searchByNameReducer?.data);
 
   // Update filteredVoters whenever voters state changes
   useEffect(() => {
@@ -19,8 +19,11 @@ const VolunteerData = () => {
 
   const handleSearch = () => {
     dispatch(searchByNameAction(searchName));
-      setSearchName(''); 
-    setFilteredVoters([]); 
+  };
+
+  const handleClear = () => {
+    setSearchName('');
+    setFilteredVoters([]);
   };
 
   return (
@@ -56,9 +59,9 @@ const VolunteerData = () => {
         </Button>
       </Box>
       {filteredVoters.length === 0 ? (
-        <Typography>No Data </Typography>
+        <Typography>No Data</Typography>
       ) : (
-        <VoterTable voters={filteredVoters} />
+        <VoterTable voters={filteredVoters} handleClear={handleClear} />
       )}
     </Box>
   );
