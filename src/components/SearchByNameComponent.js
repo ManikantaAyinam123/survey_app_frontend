@@ -18,7 +18,7 @@ const SearchByNameComponent = () => {
   return (
     <Box>
      
-         <TextField
+        <TextField
         size="small"
         label="Name"
         variant="outlined"

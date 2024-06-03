@@ -47,13 +47,13 @@ const LeadData = () => {
         <Grid item>
           <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px',"& .MuiOutlinedInput-root": {
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes outline on focus
+            borderColor: "transparent", 
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes outline on hover
+            borderColor: "transparent", 
           },
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes default outline
+            borderColor: "transparent", 
           }
         } }}>
             <Select value={section} onChange={handleSectionChange}>
@@ -76,13 +76,13 @@ const LeadData = () => {
       sx={{
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes outline on focus
+            borderColor: "transparent", 
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes outline on hover
+            borderColor: "transparent", 
           },
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", // Removes default outline
+            borderColor: "transparent", 
           }
         }
       }}

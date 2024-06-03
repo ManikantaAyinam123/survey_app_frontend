@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import VolunteerPage from './pages/VolunteerPage';
 import LeadPage from './pages/LeadPage';
+import PrivateRoute from './PrivateRoute';
 import './App.css';
 
 function App() {
@@ -10,13 +11,17 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/VolunteerData" element={<VolunteerPage/>}/>
-        <Route path="/LeadData" element={<LeadPage/>}/>
-        
+        <Route
+          path="/VolunteerData"
+          element={<PrivateRoute element={VolunteerPage} allowedRoles={['volunteer']} />}
+        />
+        <Route
+          path="/LeadData"
+          element={<PrivateRoute element={LeadPage} allowedRoles={['lead']} />}
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

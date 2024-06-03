@@ -25,7 +25,9 @@ const ResponsiveAppBar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('username');
+        localStorage.removeItem('userType');
+        console.log("this is token after logout",localStorage.getItem('token'))
+        console.log("this is usertype after logout",localStorage.getItem('userType'))
         navigate('/');
     };
 
@@ -37,20 +39,18 @@ const ResponsiveAppBar = () => {
     return (
         <AppBar position="static" sx={{ backgroundColor: '#EE8832' }}>
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white' }}>
-                    Voter Data
+                <Typography variant="h6"  sx={{ flexGrow: 1, color: 'white',letterSpacing:'1.2px',textTransform:'uppercase' }}>
+                    {localStorage.getItem('userType')}
                 </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center',mr:2 }}>
                           <Icon icon="lets-icons:user-alt-fill" width="24" height="24" style={{ color: 'white' }} />
                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                            <Typography variant="subtitle1" sx={{ marginRight: 1, color: 'white', fontWeight: 'bold', fontSize: '20px' }}>
                              {localStorage.getItem('name')}
-                                 
-                          </Typography>
-                          </Box>
+                           </Typography>
                      </Box>
-               
-                <Button color="inherit" onClick={handleLogout}  sx={{ backgroundColor: 'white', color: '#EE8832',textTransform: 'none',letterSpacing:'1.3px',fontSize:'15px',padding:'5px 20px',fontWeight:'bold' }}>
+                     </Box>
+                    <Button color="inherit" onClick={handleLogout}  sx={{ backgroundColor: 'white', color: '#EE8832',textTransform: 'none',letterSpacing:'1.3px',fontSize:'15px',padding:'5px 20px',fontWeight:'bold','&:hover':{color:'#EE8832',backgroundColor:'#ffffff'} }}>
                     Logout
                 </Button>
             </Toolbar>

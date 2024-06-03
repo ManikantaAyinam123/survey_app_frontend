@@ -29,7 +29,7 @@ const CastedDataComponent = () => {
             count={totalPages}
             page={page}
             onChange={handleChangePage}
-            color="primary"
+                   sx={{ '& .MuiPaginationItem-page.Mui-selected': { backgroundColor: '#EE8832',color:'#ffffff' },  '& .MuiPaginationItem-page:hover': {backgroundColor: '#FFAA55',color: '#ffffff', }, }}
           />
         </Stack>
       </Box>

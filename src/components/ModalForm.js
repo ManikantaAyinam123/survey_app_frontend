@@ -111,13 +111,13 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
             variant="contained"
             onClick={handleSubmit}
             sx={{
-              backgroundColor: 'black',
+              backgroundColor: '#EE8832',
               color: 'white',
               fontSize: '16px',
               textTransform: 'none',
               fontWeight: 'bold',
               '&:hover': {
-                backgroundColor: 'black',
+                backgroundColor: '#EE8832',
                 color: 'white'
               }
             }}

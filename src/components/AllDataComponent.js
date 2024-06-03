@@ -30,7 +30,7 @@ const AllDataComponent = () => {
       count={totalPages} 
       page={page} 
       onChange={handleChangePage} 
-       sx={{ '& .MuiPaginationItem-page.Mui-selected': { backgroundColor: '#EE8832',color:'#ffffff' } }}
+       sx={{ '& .MuiPaginationItem-page.Mui-selected': { backgroundColor: '#EE8832',color:'#ffffff' },  '& .MuiPaginationItemPage:hover': {backgroundColor: '#FFAA55',color: '#ffffff', }, }}
     />
   </Stack>
 </Box>

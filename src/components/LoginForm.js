@@ -43,14 +43,14 @@ const LoginForm = () => {
       try {
         const response = await axios.post('http://localhost:3000/auth/login', formData);
         console.log('Login successful:', response.data);
-        console.log(response.data.user_type);
+        console.log(response.data.user_type,"gfg");
          localStorage.setItem('userType', response.data.user_type);
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('name', response.data.username);
           console.log(localStorage.getItem('userType'));
           console.log(localStorage.getItem('token'));
            console.log(localStorage.getItem('name'));
-        if(response.data.user_type === 'volunteer')
+        if(localStorage.getItem('userType') === 'volunteer')
         {
            toast.success('Login successful!', {
           position: 'top-right',
@@ -62,6 +62,7 @@ const LoginForm = () => {
           progress: undefined,
           theme: 'colored',
         });
+           console.log("navigation");
           navigate('/VolunteerData')
 
         }
@@ -109,7 +110,7 @@ const LoginForm = () => {
         <Grid item xs={12} sm={8} md={6} lg={3.5}>
           <Box sx={{ boxShadow: '5px 4px 8px 5px rgba(0, 0, 0, 0.2)', padding: '80px 30px', borderRadius: '10px' }}>
             <Box sx={{ textAlign: 'center', mb: '20px' }}>
-              <Typography variant="h4" sx={{ fontWeight: '700' }}>
+              <Typography variant="h4" sx={{ fontWeight: '700',color:'#EE8832' }}>
                 Sign in
               </Typography>
             </Box>
@@ -117,26 +118,53 @@ const LoginForm = () => {
               <Box mb={3}>
                 <TextField
                   fullWidth
-                  label="Email"
+                   placeholder=" Enter Email"
                   name="email"
                   type="email"
                   required
+                  variant="outlined"
                   value={formData.email}
                   onChange={handleInputChange}
                   error={!!errors.email}
+                   sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        },
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        }
+                      }
+                    }}
                 />
                 {errors.email && <Typography color="error">{errors.email}</Typography>}
               </Box>
               <Box mb={5}>
                 <TextField
                   fullWidth
-                  label="Password"
+                  placeholder="Enter Password"
                   name="password"
                   type="password"
                   required
                   value={formData.password}
                   onChange={handleInputChange}
                   error={!!errors.password}
+                   sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        },
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(0, 0, 0, 0.5)", 
+                        }
+                      }
+                    }}
                 />
                 {errors.password && <Typography color="error">{errors.password}</Typography>}
               </Box>
@@ -145,10 +173,8 @@ const LoginForm = () => {
                   fullWidth
                   type="submit"
                   variant="contained"
-                  sx={{ backgroundColor: 'black', fontSize: '17px', fontWeight: 'bold', letterSpacing: '2px', padding: '10px','&:hover': {
-    backgroundColor: 'black',
-    color: 'white'
-  } }}
+                  sx={{ backgroundColor: '#EE8832', fontSize: '18px', fontWeight: 'bold', letterSpacing: '2px',textTransform:'none', padding: '10px','&:hover': {
+                   backgroundColor: '#EE8832',color: 'white',} }}
                 >
                   Login
                 </Button>
