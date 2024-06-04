@@ -4,8 +4,12 @@ import {
   FILTER_BY_CASTED_STATUS_REQUEST, FILTER_BY_CASTED_STATUS_SUCCESS, FILTER_BY_CASTED_STATUS_FAILURE ,UPDATE_VOTER_REQUEST,
   UPDATE_VOTER_SUCCESS,
   UPDATE_VOTER_FAILURE,
+  FETCH_CONSISTENCY_NAMES_REQUEST,
+  FETCH_CONSISTENCY_NAMES_SUCCESS,
+  FETCH_CONSISTENCY_NAMES_FAILURE,
+
 } from './actionTypes';
-import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter } from '../api/getData'; 
+import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData } from '../api/getData'; 
 
 export const fetchAllVotersAction = (page = 1) => {
   return async (dispatch) => {
@@ -61,6 +65,18 @@ export const updateVoterAction = (voterId, updatedFields) => {
     } catch (error) {
       console.error('Error updating voter:', error);
       dispatch({ type: UPDATE_VOTER_FAILURE, payload: error.message });
+    }
+  };
+};
+
+export const fetchConsistencyNamesAction = () => {
+  return async (dispatch) => {
+    dispatch({ type: FETCH_CONSISTENCY_NAMES_REQUEST });
+    try {
+      const data = await fetchConsistencyNamesData();
+      dispatch({ type: FETCH_CONSISTENCY_NAMES_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: FETCH_CONSISTENCY_NAMES_FAILURE, payload: error.message });
     }
   };
 };

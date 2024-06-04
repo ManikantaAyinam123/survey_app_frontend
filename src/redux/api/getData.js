@@ -4,6 +4,7 @@ const all_voters = "http://localhost:3000/voters";
 const search_by_name = "http://localhost:3000/voters/search_by_name";
 const filter_casted_status = "http://localhost:3000/voters/filter_casted_status";
 const baseURL = 'http://localhost:3000/voters';
+const consistency_names_url = "http://localhost:3000/voters/search_by_constituency";
 
 export const fetchAllVotersData = async (page) => {
   try {
@@ -52,6 +53,17 @@ try {
     return response.data;
   } catch (error) {
     console.error('Error updating voter:', error);
+    throw error;
+  }
+};
+
+export const fetchConsistencyNamesData = async () => {
+  try {
+    const response = await axios.get(consistency_names_url);
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.error('Error fetching consistency names data:', error);
     throw error;
   }
 };

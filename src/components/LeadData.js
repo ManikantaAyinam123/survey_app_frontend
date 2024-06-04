@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchByNameAction } from '../redux/actions/action';
+import {fetchConsistencyNamesAction} from '../redux/actions/action';
 import { TextField } from '@mui/material';
 import VoterTable from './VoterTable';
 import { Box, Typography, FormControl, Select, MenuItem, Grid } from '@mui/material';
@@ -8,13 +9,21 @@ import AllDataComponent from './AllDataComponent';
 import CastedDataComponent from './CastedDataComponent';
 import NotCastedDataComponent from './NotCastedDataComponent';
 import {Icon} from "@iconify/react";
+import Autocomplete from '@mui/material/Autocomplete';
 
 const LeadData = () => {
   const dispatch = useDispatch();
   const [searchName, setSearchName] = useState('');
   const searchData = useSelector((state) => state.searchByNameReducer?.data || []);
+   const consistencyNames = useSelector((state) => state || []);
+   console.log("consistencyNames data",consistencyNames);
+   const [consitency, setConsitency] = useState('');
   const [section, setSection] = useState('all');
   const [filteredSearchData, setFilteredSearchData] = useState([]);
+
+   useEffect(() => {
+    dispatch(fetchConsistencyNamesAction(consitency));
+  }, [dispatch]);
 
   useEffect(() => {
    
@@ -40,10 +49,42 @@ const LeadData = () => {
     setSearchName(event.target.value);
     dispatch(searchByNameAction(event.target.value));
   };
+  const handleInputconstitencyChange =(event) =>{
+     setConsitency(event.target.value);
+     console.log("consitency name",event.target.value);
+      console.log("consitency name",consitency);
+  };
 
   return (
     <Box sx={{ padding: 4 }}>
       <Grid container sx={{padding: 3 , display: 'flex', justifyContent: 'space-between' }}>
+
+        <Grid item>
+          <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+            <TextField
+      size="small"
+     
+      value={consitency}
+      onChange={handleInputconstitencyChange}
+      InputProps={{
+        endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
+      }}
+      sx={{
+        "& .MuiOutlinedInput-root": {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "transparent", 
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "transparent", 
+          },
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "transparent", 
+          }
+        }
+      }}
+    />
+          </Box>
+        </Grid>
         <Grid item>
           <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px',"& .MuiOutlinedInput-root": {
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -92,10 +133,7 @@ const LeadData = () => {
 
 
 
-
-
-
-      </Grid>
+</Grid>
       {searchName.trim() !== '' ? (
         filteredSearchData.length === 0 ? (
           <Typography variant="h6" sx={{ marginTop: 2 }}>
