@@ -7,15 +7,18 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 
-const CastedDataComponent = () => {
+const NotCastedDataComponent = ({constituencyName, boothName}) => {
+  console.log("not casted component props check ---> 1",constituencyName);
+  console.log("not casted component props check --->  2",boothName);
   const dispatch = useDispatch();
     const { data: nonCastedData, currentPage, totalPages } = useSelector((state) => state.filterByCastedStatusReducer);
 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(filterByCastedStatusAction(false,page)); 
-  }, [dispatch,page]);
+    dispatch(filterByCastedStatusAction(false,page,constituencyName, boothName)); 
+    console.log(false,page,constituencyName, boothName);
+  }, [dispatch,page,constituencyName, boothName]);
    const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -37,4 +40,4 @@ const CastedDataComponent = () => {
     );
 };
 
-export default CastedDataComponent;
+export default NotCastedDataComponent;

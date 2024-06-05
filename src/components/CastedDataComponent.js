@@ -6,16 +6,16 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 
-const CastedDataComponent = ({ section }) => {
+const CastedDataComponent = ({ section,constituencyName, boothName }) => {
   const dispatch = useDispatch();
   const { data: castedData, currentPage, totalPages } = useSelector((state) => state.filterByCastedStatusReducer);
 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(filterByCastedStatusAction(true, page));
+    dispatch(filterByCastedStatusAction(true, page,constituencyName, boothName));
     console.log("useEffect triggered with page:", page);
-  }, [dispatch, page]); 
+  }, [dispatch, page,constituencyName, boothName]); 
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

@@ -7,15 +7,18 @@ import {
   FETCH_CONSISTENCY_NAMES_REQUEST,
   FETCH_CONSISTENCY_NAMES_SUCCESS,
   FETCH_CONSISTENCY_NAMES_FAILURE,
+  FETCH_BOOTH_NAMES_REQUEST, FETCH_BOOTH_NAMES_SUCCESS, FETCH_BOOTH_NAMES_FAILURE,
 
 } from './actionTypes';
-import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData } from '../api/getData'; 
+import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData, fetchBoothNamesData } from '../api/getData'; 
 
-export const fetchAllVotersAction = (page = 1) => {
+export const fetchAllVotersAction = (page = 1,constituencyName,boothName) => {
+  console.log("action all voters data",constituencyName);
+  console.log("action all voters data",boothName);
   return async (dispatch) => {
     dispatch({ type: FETCH_ALL_VOTERS_REQUEST });
     try {
-      const data = await fetchAllVotersData(page);
+      const data = await fetchAllVotersData(page,constituencyName,boothName);
       dispatch({ type: FETCH_ALL_VOTERS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FETCH_ALL_VOTERS_FAILURE, payload: error.message });
@@ -23,7 +26,7 @@ export const fetchAllVotersAction = (page = 1) => {
   };
 };
 
-export const searchByNameAction = (searchName) => {
+export const searchByNameAction = (searchName,constituency,boothName) => {
   console.log("name in action",searchName);
   return async (dispatch) => {
     dispatch({ type: SEARCH_BY_NAME_REQUEST });
@@ -39,13 +42,13 @@ export const searchByNameAction = (searchName) => {
   };
 };
 
-export const filterByCastedStatusAction = (casted, page = 1) => {
-  console.log("page", page);
+export const filterByCastedStatusAction = (casted, page = 1,constituencyName, boothName) => {
+  console.log("casted status in action------------------>", casted,constituencyName, boothName);
   
   return async (dispatch) => {
     dispatch({ type: FILTER_BY_CASTED_STATUS_REQUEST });
     try {
-      const data = await filterByCastedStatusData(casted, page);
+      const data = await filterByCastedStatusData(casted, page,constituencyName, boothName);
       dispatch({ type: FILTER_BY_CASTED_STATUS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FILTER_BY_CASTED_STATUS_FAILURE, payload: error.message });
@@ -69,14 +72,28 @@ export const updateVoterAction = (voterId, updatedFields) => {
   };
 };
 
-export const fetchConsistencyNamesAction = () => {
+export const fetchConsistencyNamesAction = (name) => {
+  console.log("in action",name);
   return async (dispatch) => {
     dispatch({ type: FETCH_CONSISTENCY_NAMES_REQUEST });
     try {
-      const data = await fetchConsistencyNamesData();
+      const data = await fetchConsistencyNamesData(name);
       dispatch({ type: FETCH_CONSISTENCY_NAMES_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FETCH_CONSISTENCY_NAMES_FAILURE, payload: error.message });
+    }
+  };
+};
+
+export const fetchBoothNamesAction = (name) => {
+  console.log("Action in booth",name);
+  return async (dispatch) => {
+    dispatch({ type: FETCH_BOOTH_NAMES_REQUEST });
+    try {
+      const data = await fetchBoothNamesData(name);
+      dispatch({ type: FETCH_BOOTH_NAMES_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: FETCH_BOOTH_NAMES_FAILURE, payload: error.message });
     }
   };
 };

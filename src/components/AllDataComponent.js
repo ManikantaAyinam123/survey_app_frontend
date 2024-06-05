@@ -6,15 +6,17 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Box, Typography, FormControl, Select, MenuItem } from '@mui/material';
 
-const AllDataComponent = () => {
+const AllDataComponent = ({constituencyName, boothName}) => {
+  console.log("props in all data component constituencyName",constituencyName)
+  console.log("props in all data component boothName",boothName)
   const dispatch = useDispatch();
   const { data: allVotersdata, currentPage, totalPages } = useSelector((state) => state.fetchAllVoters);
 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchAllVotersAction(page));
-  }, [dispatch, page]);
+    dispatch(fetchAllVotersAction(page,constituencyName,boothName));
+  }, [dispatch, page,constituencyName,boothName]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

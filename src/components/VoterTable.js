@@ -78,6 +78,8 @@ const VoterTable = ({ voters }) => {
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Age</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Sex</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>State</TableCell>
+              <TableCell sx={{fontWeight:'bold',color:'white'}}>Constituency</TableCell>
+              <TableCell sx={{fontWeight:'bold',color:'white'}}>Booth Name</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Party</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Casted</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Figured By</TableCell>
@@ -92,6 +94,8 @@ const VoterTable = ({ voters }) => {
                 <TableCell>{voter.age}</TableCell>
                 <TableCell>{voter.sex}</TableCell>
                 <TableCell>{voter.state}</TableCell>
+                <TableCell>{voter.constituency}</TableCell>
+                <TableCell>{voter.booth_name}</TableCell>
                 <TableCell>{voter.party}</TableCell>
                 <TableCell>{voter.casted ? "Yes" : "No"}</TableCell>
                 <TableCell>{voter.figured_by}</TableCell>

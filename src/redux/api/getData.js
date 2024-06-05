@@ -5,10 +5,13 @@ const search_by_name = "http://localhost:3000/voters/search_by_name";
 const filter_casted_status = "http://localhost:3000/voters/filter_casted_status";
 const baseURL = 'http://localhost:3000/voters';
 const consistency_names_url = "http://localhost:3000/voters/search_by_constituency";
+const booth_names_url = "http://localhost:3000/voters/search_by_booth_name";
 
-export const fetchAllVotersData = async (page) => {
+export const fetchAllVotersData = async (page,constituencyName,boothName) => {
+  console.log("apinames in allvoters",constituencyName)
+   console.log("apinames in allvoters",boothName)
   try {
-    const response = await axios.get(`${all_voters}?page=${page}`);
+    const response = await axios.get(`${all_voters}?constituency=${constituencyName}&booth_name=${boothName}&page=${page}`);
     const data = response.data;
     console.log("thisis api data",data);
     return data;
@@ -18,7 +21,7 @@ export const fetchAllVotersData = async (page) => {
   }
 };
 
-export const searchByNameData = async (name) => {
+export const searchByNameData = async (name,constituency,boothName) => {
   try {
     console.log("fromapi", name);
     const response = await axios.get(`${search_by_name}?voter_name=${name}`);
@@ -32,12 +35,12 @@ export const searchByNameData = async (name) => {
   }
 };
 
-export const filterByCastedStatusData = async (casted, page) => {
+export const filterByCastedStatusData = async (casted, page,constituencyName, boothName) => {
   try {
-    console.log("Filter by Casted Status Data from API", page);
-    const response = await axios.get(`${filter_casted_status}?casted=${casted}&page=${page}`);
+    console.log("Filter by Casted Status Data from API +++++>",casted, page,constituencyName, boothName );
+    const response = await axios.get(`${filter_casted_status}?casted=${casted}&constituency=${constituencyName}&booth_name=${boothName}&page=${page}`);
     const data = response.data;
-    console.log("Filter by Casted Status Data from API", response);
+    console.log("Filter by Casted Status Data from API ////////////", data);
     return data;
   } catch (error) {
     console.error('Error filtering by casted status:', error);
@@ -57,13 +60,28 @@ try {
   }
 };
 
-export const fetchConsistencyNamesData = async () => {
+export const fetchConsistencyNamesData = async (name) => {
+  console.log("in api",name);
   try {
-    const response = await axios.get(consistency_names_url);
+    const response = await axios.get(`${consistency_names_url}?constituency=${name}`);
     const data = response.data;
+    console.log("api constituency",data)
     return data;
   } catch (error) {
     console.error('Error fetching consistency names data:', error);
+    throw error;
+  }
+};
+
+export const fetchBoothNamesData = async (name) => {
+  try {
+    console.log("Fetching booth names for:", name);
+    const response = await axios.get(`${booth_names_url}?booth_name=${name}`);
+    const data = response.data;
+    console.log("Booth Names Data from API", data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching booth names data:', error);
     throw error;
   }
 };

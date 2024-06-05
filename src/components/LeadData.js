@@ -1,32 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchByNameAction } from '../redux/actions/action';
-import {fetchConsistencyNamesAction} from '../redux/actions/action';
-import { TextField } from '@mui/material';
+import { searchByNameAction, fetchConsistencyNamesAction,fetchBoothNamesAction } from '../redux/actions/action';
+import { TextField, Box, Typography, FormControl, Select, MenuItem, Grid } from '@mui/material';
 import VoterTable from './VoterTable';
-import { Box, Typography, FormControl, Select, MenuItem, Grid } from '@mui/material';
 import AllDataComponent from './AllDataComponent';
 import CastedDataComponent from './CastedDataComponent';
 import NotCastedDataComponent from './NotCastedDataComponent';
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 import Autocomplete from '@mui/material/Autocomplete';
 
 const LeadData = () => {
   const dispatch = useDispatch();
   const [searchName, setSearchName] = useState('');
-  const searchData = useSelector((state) => state.searchByNameReducer?.data || []);
-   const consistencyNames = useSelector((state) => state || []);
-   console.log("consistencyNames data",consistencyNames);
-   const [consitency, setConsitency] = useState('');
+  const [constituency, setConstituency] = useState('');
   const [section, setSection] = useState('all');
   const [filteredSearchData, setFilteredSearchData] = useState([]);
+  const [selectedConstituencyInAutocomplete,setSelectedConstituencyInAutocomplete] =useState('');
+   const [selectedBoothInAutocomplete,setSelectedBoothInAutocomplete] =useState('');
+
+  const [booth, setBooth]=  useState('');
+
+  const [selectedConstituency, setSelectedConstituency] = useState('');
+  const searchData = useSelector((state) => state.searchByNameReducer?.data || []);
+  const constituencyNames = useSelector((state) => state.constituencyNameReducer?.names || []);
+    const boothNames = useSelector((state) => state.boothNameReducer?.names || []);
+
+  console.log("constituencyNames data", constituencyNames);
+
+  
 
    useEffect(() => {
-    dispatch(fetchConsistencyNamesAction(consitency));
-  }, [dispatch]);
+    if (booth.trim() !== '') {
+      dispatch(fetchBoothNamesAction(booth));
+    }
+  }, [booth, dispatch]);
 
   useEffect(() => {
+      if(constituency.trim() !=='')
+      {
+      dispatch(fetchConsistencyNamesAction(constituency));
+
+      }
+      console.log("in useeffect",constituency)
    
+  }, [constituency, dispatch]);
+
+  useEffect(() => {
     if (section === 'all') {
       setFilteredSearchData(searchData);
     } else if (section === 'casted') {
@@ -37,7 +56,7 @@ const LeadData = () => {
   }, [section, searchData]);
 
   const handleSearch = () => {
-    dispatch(searchByNameAction(searchName));
+    dispatch(searchByNameAction(searchName,selectedConstituencyInAutocomplete,selectedBoothInAutocomplete));
   };
 
   const handleSectionChange = (event) => {
@@ -49,54 +68,76 @@ const LeadData = () => {
     setSearchName(event.target.value);
     dispatch(searchByNameAction(event.target.value));
   };
-  const handleInputconstitencyChange =(event) =>{
-     setConsitency(event.target.value);
-     console.log("consitency name",event.target.value);
-      console.log("consitency name",consitency);
+
+  const handleInputconstituencyChange = (event) => {
+    
+    setConstituency(event.target.value);
+    
   };
+
+   const handleInputBoothChange=(event) =>{
+    setBooth(event.target.value);
+    console.log("boothname",booth);
+   }
+
+
+ 
 
   return (
     <Box sx={{ padding: 4 }}>
-      <Grid container sx={{padding: 3 , display: 'flex', justifyContent: 'space-between' }}>
+      <Grid container sx={{ padding: 3, display: 'flex', justifyContent: 'space-between' }}>
 
         <Grid item>
-          <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
-            <TextField
-      size="small"
-     
-      value={consitency}
-      onChange={handleInputconstitencyChange}
-      InputProps={{
-        endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
-      }}
-      sx={{
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          }
-        }
-      }}
-    />
+          <Box sx={{  borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+            <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={constituencyNames}
+            sx={{ width: 300 }}
+            renderInput={(params) => {
+              console.log("params", params);
+              setSelectedConstituencyInAutocomplete(params.inputProps.value);
+              console.log("setSelectedConstituencyInAutocomplete usestate",selectedConstituencyInAutocomplete);
+              console.log("params2", params.inputProps.value);
+             return (
+               <TextField onChange={handleInputconstituencyChange} {...params}label="Consituency"/>
+              );
+           }}
+             />
           </Box>
         </Grid>
         <Grid item>
-          <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px',"& .MuiOutlinedInput-root": {
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          }
-        } }}>
+          <Box sx={{  borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+             <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={boothNames}
+              sx={{ width: 300 }}
+              renderInput={(params) => {
+              console.log("params", params);
+              setSelectedBoothInAutocomplete(params.inputProps.value);
+              console.log("setSelectedboothInAutocomplete usestate",selectedBoothInAutocomplete);
+              console.log("params from booth", params.inputProps.value);
+              return (
+                      <TextField onChange={handleInputBoothChange}{...params}label="Booth "/>
+                    );
+              }}
+            />
+          </Box>
+        </Grid>
+
+        <Grid item>
+          <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px', "& .MuiOutlinedInput-root": {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "transparent",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "transparent",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "transparent",
+            }
+          } }}>
             <Select value={section} onChange={handleSectionChange}>
               <MenuItem value="all">All Voters</MenuItem>
               <MenuItem value="casted">Casted Votes</MenuItem>
@@ -104,36 +145,35 @@ const LeadData = () => {
             </Select>
           </FormControl>
         </Grid>
-<Grid item>
-  <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
-    <TextField
-      size="small"
-      placeholder="Search by entering a name"
-      value={searchName}
-      onChange={handleInputChange}
-      InputProps={{
-        endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
-      }}
-      sx={{
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent", 
-          }
-        }
-      }}
-    />
-  </Box>
-</Grid>
 
+        <Grid item>
+          <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+            <TextField
+              size="small"
+              placeholder="Search by entering a name"
+              value={searchName}
+              onChange={handleInputChange}
+              InputProps={{
+                endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "transparent",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "transparent",
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "transparent",
+                  }
+                }
+              }}
+            />
+          </Box>
+        </Grid>
 
-
-</Grid>
+      </Grid>
       {searchName.trim() !== '' ? (
         filteredSearchData.length === 0 ? (
           <Typography variant="h6" sx={{ marginTop: 2 }}>
@@ -144,9 +184,10 @@ const LeadData = () => {
         )
       ) : (
         <>
-          {section === 'all' && <AllDataComponent />}
-          {section === 'casted' && <CastedDataComponent />}
-          {section === 'not-casted' && <NotCastedDataComponent />}
+          {section === 'all' && <AllDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete}/>}
+          {section === 'casted' && <CastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete}/>}
+          {section === 'not-casted' && <NotCastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete} />}
+
         </>
       )}
     </Box>
