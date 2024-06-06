@@ -7,11 +7,11 @@ const baseURL = 'http://localhost:3000/voters';
 const consistency_names_url = "http://localhost:3000/voters/search_by_constituency";
 const booth_names_url = "http://localhost:3000/voters/search_by_booth_name";
 
-export const fetchAllVotersData = async (page,constituencyName,boothName) => {
-  console.log("apinames in allvoters",constituencyName)
+export const fetchAllVotersData = async (page,boothName) => {
+
    console.log("apinames in allvoters",boothName)
   try {
-    const response = await axios.get(`${all_voters}?constituency=${constituencyName}&booth_name=${boothName}&page=${page}`);
+    const response = await axios.get(`${all_voters}?booth_name=${boothName}&page=${page}`);
     const data = response.data;
     console.log("thisis api data",data);
     return data;
@@ -21,13 +21,13 @@ export const fetchAllVotersData = async (page,constituencyName,boothName) => {
   }
 };
 
-export const searchByNameData = async (name,constituency,boothName) => {
+export const searchByNameData = async (name,boothName) => {
   try {
-    console.log("fromapi", name);
-    const response = await axios.get(`${search_by_name}?voter_name=${name}`);
+    console.log("from search api ============>", name,boothName);
+    const response = await axios.get(`${search_by_name}?voter_name=${name}&booth_name=${boothName}`);
     console.log(response.data);
     const data = response.data;
-    console.log("Search by Name Data from API", data);
+    console.log("Search by Name Data from API ===================>", data);
     return data;
   } catch (error) {
     console.error('Error searching by name:', error);

@@ -69,6 +69,7 @@ const VoterTable = ({ voters }) => {
 
   return (
     <>
+     {voters.length !=0 &&(
       <TableContainer sx={{ boxShadow: '0px 0px 5px #888888',borderRadius:'15px'}}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{backgroundColor:'#EE8832',}}>
@@ -76,11 +77,10 @@ const VoterTable = ({ voters }) => {
               <TableCell sx={{fontWeight:'bold',color:'white'}}>ID</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Name</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Age</TableCell>
-              <TableCell sx={{fontWeight:'bold',color:'white'}}>Sex</TableCell>
-              <TableCell sx={{fontWeight:'bold',color:'white'}}>State</TableCell>
-              <TableCell sx={{fontWeight:'bold',color:'white'}}>Constituency</TableCell>
+              <TableCell sx={{fontWeight:'bold',color:'white'}}>Gender</TableCell>
+              <TableCell sx={{fontWeight:'bold',color:'white'}}>House No</TableCell>
+              <TableCell sx={{fontWeight:'bold',color:'white'}}>Mobile No</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Booth Name</TableCell>
-              <TableCell sx={{fontWeight:'bold',color:'white'}}>Party</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Casted</TableCell>
               <TableCell sx={{fontWeight:'bold',color:'white'}}>Figured By</TableCell>
               {userType === 'volunteer' && <TableCell sx={{fontWeight:'bold',color:'white'}}>Action </TableCell>} 
@@ -92,11 +92,10 @@ const VoterTable = ({ voters }) => {
                 <TableCell>{voter.id}</TableCell>
                 <TableCell>{voter.voter_name}</TableCell>
                 <TableCell>{voter.age}</TableCell>
-                <TableCell>{voter.sex}</TableCell>
-                <TableCell>{voter.state}</TableCell>
-                <TableCell>{voter.constituency}</TableCell>
+                <TableCell>{voter.gender}</TableCell>
+                <TableCell>{voter.house_number}</TableCell>
+                <TableCell>{voter.mobile_No}</TableCell>
                 <TableCell>{voter.booth_name}</TableCell>
-                <TableCell>{voter.party}</TableCell>
                 <TableCell>{voter.casted ? "Yes" : "No"}</TableCell>
                 <TableCell>{voter.figured_by}</TableCell>
                 {userType === 'volunteer' && (
@@ -111,6 +110,7 @@ const VoterTable = ({ voters }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      )}
       <ModalForm 
         open={open} 
         handleClose={handleClose} 

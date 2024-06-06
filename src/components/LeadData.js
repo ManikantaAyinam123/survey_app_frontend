@@ -32,6 +32,7 @@ const LeadData = () => {
    useEffect(() => {
     if (booth.trim() !== '') {
       dispatch(fetchBoothNamesAction(booth));
+
     }
   }, [booth, dispatch]);
 
@@ -55,18 +56,17 @@ const LeadData = () => {
     }
   }, [section, searchData]);
 
-  const handleSearch = () => {
-    dispatch(searchByNameAction(searchName,selectedConstituencyInAutocomplete,selectedBoothInAutocomplete));
-  };
+ 
 
   const handleSectionChange = (event) => {
     const value = event.target.value;
     setSection(value);
   };
 
-  const handleInputChange = (event) => {
+  const handleInputSearchChange = (event) => {
     setSearchName(event.target.value);
-    dispatch(searchByNameAction(event.target.value));
+    dispatch(searchByNameAction(event.target.value,selectedBoothInAutocomplete));
+    console.log("===============>",selectedBoothInAutocomplete)
   };
 
   const handleInputconstituencyChange = (event) => {
@@ -85,49 +85,43 @@ const LeadData = () => {
 
   return (
     <Box sx={{ padding: 4 }}>
-      <Grid container sx={{ padding: 3, display: 'flex', justifyContent: 'space-between' }}>
+      <Grid container sx={{ padding:'20px', display: 'flex', justifyContent: 'space-between', }}>
+          <Grid item>
+            <Box sx={{  borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+               <Autocomplete
+                disablePortal
+                size="small"
+                id="combo-box-demo"
+                options={boothNames}
+                sx={{ width: 300 }}
+                renderInput={(params) => {
+                console.log("params", params);
+                setSelectedBoothInAutocomplete(params.inputProps.value);
+                console.log("setSelectedboothInAutocomplete usestate",selectedBoothInAutocomplete);
+                console.log("params from booth", params.inputProps.value);
+                return (
+                  <TextField 
+                  onChange={handleInputBoothChange}
+                   sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  }
+                }
+              }}{...params} placeholder="Booth name"/>);
+                }}
+              />
+            </Box> 
+          </Grid>
 
         <Grid item>
-          <Box sx={{  borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
-            <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={constituencyNames}
-            sx={{ width: 300 }}
-            renderInput={(params) => {
-              console.log("params", params);
-              setSelectedConstituencyInAutocomplete(params.inputProps.value);
-              console.log("setSelectedConstituencyInAutocomplete usestate",selectedConstituencyInAutocomplete);
-              console.log("params2", params.inputProps.value);
-             return (
-               <TextField onChange={handleInputconstituencyChange} {...params}label="Consituency"/>
-              );
-           }}
-             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box sx={{  borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
-             <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={boothNames}
-              sx={{ width: 300 }}
-              renderInput={(params) => {
-              console.log("params", params);
-              setSelectedBoothInAutocomplete(params.inputProps.value);
-              console.log("setSelectedboothInAutocomplete usestate",selectedBoothInAutocomplete);
-              console.log("params from booth", params.inputProps.value);
-              return (
-                      <TextField onChange={handleInputBoothChange}{...params}label="Booth "/>
-                    );
-              }}
-            />
-          </Box>
-        </Grid>
-
-        <Grid item>
-          <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px', "& .MuiOutlinedInput-root": {
+          <FormControl size="small" sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white",mt:'4px',  "& .MuiOutlinedInput-root": {
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
               borderColor: "transparent",
             },
@@ -147,12 +141,13 @@ const LeadData = () => {
         </Grid>
 
         <Grid item>
-          <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
+          <Box sx={{ boxShadow: '0px 0px 3px #888888', borderRadius: '7px', backgroundColor: "white", }}>
             <TextField
               size="small"
               placeholder="Search by entering a name"
               value={searchName}
-              onChange={handleInputChange}
+              onChange={handleInputSearchChange}
+              autoComplete="off"  
               InputProps={{
                 endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
               }}
@@ -174,6 +169,9 @@ const LeadData = () => {
         </Grid>
 
       </Grid>
+     <>
+  {selectedBoothInAutocomplete && (
+    <>
       {searchName.trim() !== '' ? (
         filteredSearchData.length === 0 ? (
           <Typography variant="h6" sx={{ marginTop: 2 }}>
@@ -184,12 +182,15 @@ const LeadData = () => {
         )
       ) : (
         <>
-          {section === 'all' && <AllDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete}/>}
-          {section === 'casted' && <CastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete}/>}
+          {section === 'all' && <AllDataComponent  boothName={selectedBoothInAutocomplete} />}
+          {section === 'casted' && <CastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete} />}
           {section === 'not-casted' && <NotCastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete} />}
-
         </>
       )}
+    </>
+  )}
+</>
+
     </Box>
   );
 };

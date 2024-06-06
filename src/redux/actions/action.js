@@ -12,13 +12,13 @@ import {
 } from './actionTypes';
 import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData, fetchBoothNamesData } from '../api/getData'; 
 
-export const fetchAllVotersAction = (page = 1,constituencyName,boothName) => {
-  console.log("action all voters data",constituencyName);
+export const fetchAllVotersAction = (page = 1,boothName) => {
+ 
   console.log("action all voters data",boothName);
   return async (dispatch) => {
     dispatch({ type: FETCH_ALL_VOTERS_REQUEST });
     try {
-      const data = await fetchAllVotersData(page,constituencyName,boothName);
+      const data = await fetchAllVotersData(page,boothName);
       dispatch({ type: FETCH_ALL_VOTERS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FETCH_ALL_VOTERS_FAILURE, payload: error.message });
@@ -26,14 +26,12 @@ export const fetchAllVotersAction = (page = 1,constituencyName,boothName) => {
   };
 };
 
-export const searchByNameAction = (searchName,constituency,boothName) => {
-  console.log("name in action",searchName);
+export const searchByNameAction = (searchName,boothName) => {
+  console.log("name in action ===============>",searchName,boothName);
   return async (dispatch) => {
     dispatch({ type: SEARCH_BY_NAME_REQUEST });
     try {
-      const data = await searchByNameData(searchName); 
-      console.log(searchName);
-      console.log("this is name search")
+      const data = await searchByNameData(searchName,boothName); 
       dispatch({ type: SEARCH_BY_NAME_SUCCESS, payload: data });
 
     } catch (error) {

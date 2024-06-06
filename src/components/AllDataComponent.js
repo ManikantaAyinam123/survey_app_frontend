@@ -6,8 +6,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Box, Typography, FormControl, Select, MenuItem } from '@mui/material';
 
-const AllDataComponent = ({constituencyName, boothName}) => {
-  console.log("props in all data component constituencyName",constituencyName)
+const AllDataComponent = ({ boothName}) => {
+  
   console.log("props in all data component boothName",boothName)
   const dispatch = useDispatch();
   const { data: allVotersdata, currentPage, totalPages } = useSelector((state) => state.fetchAllVoters);
@@ -15,8 +15,8 @@ const AllDataComponent = ({constituencyName, boothName}) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchAllVotersAction(page,constituencyName,boothName));
-  }, [dispatch, page,constituencyName,boothName]);
+    dispatch(fetchAllVotersAction(page,boothName));
+  }, [dispatch, page,boothName]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -25,7 +25,7 @@ const AllDataComponent = ({constituencyName, boothName}) => {
   return (
     <> 
       <VoterTable voters={allVotersdata} />
-      
+  {allVotersdata.length !=0 &&(   
   <Box sx={{  display: 'flex', justifyContent: 'center',mt:'10px' }}>
      <Stack spacing={2} direction="row">
     <Pagination 
@@ -36,6 +36,7 @@ const AllDataComponent = ({constituencyName, boothName}) => {
     />
   </Stack>
 </Box>
+)}
     </>
   );
 };
