@@ -40,13 +40,13 @@ export const searchByNameAction = (searchName,boothName) => {
   };
 };
 
-export const filterByCastedStatusAction = (casted, page = 1,constituencyName, boothName) => {
-  console.log("casted status in action------------------>", casted,constituencyName, boothName);
+export const filterByCastedStatusAction = (casted, page = 1, boothName) => {
+  console.log("casted status in action------------------>", casted,page, boothName);
   
   return async (dispatch) => {
     dispatch({ type: FILTER_BY_CASTED_STATUS_REQUEST });
     try {
-      const data = await filterByCastedStatusData(casted, page,constituencyName, boothName);
+      const data = await filterByCastedStatusData(casted, page, boothName);
       dispatch({ type: FILTER_BY_CASTED_STATUS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FILTER_BY_CASTED_STATUS_FAILURE, payload: error.message });

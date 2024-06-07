@@ -16,10 +16,10 @@ const VoterTable = ({ voters }) => {
   const [formData, setFormData] = useState({
     voter_name: '',
     age: '',
-    sex: '',
-    state: '',
-    constituency: '',
-    party: '',
+    gender: '',
+    house_number: '',
+    mobile_No: '',
+    booth_name: '',
     casted: false,
     figured_by: ''
   });

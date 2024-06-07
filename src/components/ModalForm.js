@@ -45,50 +45,41 @@ const ModalForm = ({ open, handleClose, formData, handleChange, handleSubmit }) 
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="sex"
-              label="Sex"
-              value={formData.sex}
+              name="gender"
+              label="Gender"
+              value={formData.gender}
               onChange={handleChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="state"
-              label="State"
-              value={formData.state}
+              name="house_number"
+              label="House Number"
+              value={formData.house_number}
               onChange={handleChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="constituency"
-              label="Constituency"
-              value={formData.constituency}
+              name="mobile_No"
+              label="Mobile Number"
+              value={formData.mobile_No}
               onChange={handleChange}
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="party-label">Party</InputLabel>
-              <Select
-                labelId="party-label"
-                name="party"
-                id="party"
-                label="Party"
-                value={formData.party}
-                onChange={handleChange}
-                fullWidth
-              >
-                <MenuItem value="TDP">TDP</MenuItem>
-                <MenuItem value="YSRCP">YSRCP</MenuItem>
-                <MenuItem value="BJP">BJP</MenuItem>
-                <MenuItem value="NOTA">NOTA</MenuItem>
-              </Select>
-            </FormControl>
+           <Grid item xs={12} sm={6}>
+            <TextField
+              name="booth_name"
+              label="Booth Name"
+              value={formData.booth_name}
+              onChange={handleChange}
+              fullWidth
+            />
           </Grid>
+         
           <Grid item xs={12} sm={6} sx={{ marginBottom: '10px' }}>
             <FormControl fullWidth>
               <InputLabel id="casted-label">Casted</InputLabel>

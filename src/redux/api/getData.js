@@ -35,10 +35,10 @@ export const searchByNameData = async (name,boothName) => {
   }
 };
 
-export const filterByCastedStatusData = async (casted, page,constituencyName, boothName) => {
+export const filterByCastedStatusData = async (casted, page, boothName) => {
   try {
-    console.log("Filter by Casted Status Data from API +++++>",casted, page,constituencyName, boothName );
-    const response = await axios.get(`${filter_casted_status}?casted=${casted}&constituency=${constituencyName}&booth_name=${boothName}&page=${page}`);
+    console.log("Filter by Casted Status Data from API +++++>",casted, page, boothName );
+    const response = await axios.get(`${filter_casted_status}?casted=${casted}&booth_name=${boothName}&page=${page}`);
     const data = response.data;
     console.log("Filter by Casted Status Data from API ////////////", data);
     return data;

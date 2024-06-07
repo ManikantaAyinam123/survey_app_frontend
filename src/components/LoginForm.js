@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+ 
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Grid } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
@@ -47,6 +48,8 @@ const LoginForm = () => {
          localStorage.setItem('userType', response.data.user_type);
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('name', response.data.username);
+          const storedToken =localStorage.getItem('token')
+          axios.defaults.headers.common['Authorization'] =`${storedToken}`;
           console.log(localStorage.getItem('userType'));
           console.log(localStorage.getItem('token'));
            console.log(localStorage.getItem('name'));

@@ -61,6 +61,7 @@ const LeadData = () => {
   const handleSectionChange = (event) => {
     const value = event.target.value;
     setSection(value);
+    console.log("section changed to ------------>",section)
   };
 
   const handleInputSearchChange = (event) => {
@@ -184,7 +185,7 @@ const LeadData = () => {
         <>
           {section === 'all' && <AllDataComponent  boothName={selectedBoothInAutocomplete} />}
           {section === 'casted' && <CastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete} />}
-          {section === 'not-casted' && <NotCastedDataComponent constituencyName={selectedConstituencyInAutocomplete} boothName={selectedBoothInAutocomplete} />}
+          {section === 'not-casted' && <NotCastedDataComponent  boothName={selectedBoothInAutocomplete} />}
         </>
       )}
     </>
