@@ -8,10 +8,10 @@ import {
   FETCH_CONSISTENCY_NAMES_SUCCESS,
   FETCH_CONSISTENCY_NAMES_FAILURE,
   FETCH_BOOTH_NAMES_REQUEST, FETCH_BOOTH_NAMES_SUCCESS, FETCH_BOOTH_NAMES_FAILURE,
-
+   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE 
 } from './actionTypes';
-import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData, fetchBoothNamesData } from '../api/getData'; 
-
+import { fetchAllVotersData, searchByNameData, filterByCastedStatusData, updateVoter,fetchConsistencyNamesData, fetchBoothNamesData,loginData } from '../api/getData'; 
+import axios from 'axios';
 export const fetchAllVotersAction = (page = 1,boothName) => {
  
   console.log("action all voters data",boothName);
@@ -92,6 +92,66 @@ export const fetchBoothNamesAction = (name) => {
       dispatch({ type: FETCH_BOOTH_NAMES_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FETCH_BOOTH_NAMES_FAILURE, payload: error.message });
+    }
+  };
+};
+
+export const loginAction = (formData,navigate) => {
+  console.log("Login action triggered with formData:", formData);
+  return async (dispatch) => {
+    dispatch({ type: LOGIN_REQUEST });
+    try {
+     
+      const data = await loginData(formData);
+
+      console.log("in action --------------->",data);
+     
+      // localStorage.setItem('userType', data.user_type);
+      // localStorage.setItem('token', data.token);
+      // localStorage.setItem('name', data.username);
+      //  // const storedToken =localStorage.getItem('token')
+      //  //    axios.defaults.headers.common['Authorization'] =`${storedToken}`;
+      //  console.log("local storage data in action ========>")
+      //     console.log(localStorage.getItem('userType'));
+      //     console.log(localStorage.getItem('token'));
+      //      console.log(localStorage.getItem('name'));
+      // axios.defaults.headers.common['Authorization'] = `${data.token}`;
+      
+         // localStorage.setItem('userType', authState.user.user_type);
+         //  localStorage.setItem('token', authState.user.token);
+         //  localStorage.setItem('name', authState.user.username);
+         //  const storedToken =localStorage.getItem('token')
+         //  axios.defaults.headers.common['Authorization'] =`${storedToken}`;
+         //  console.log(localStorage.getItem('userType'));
+         //  console.log(localStorage.getItem('token'));
+         //   console.log(localStorage.getItem('name'));
+      // axios.defaults.headers.common['Authorization'] = `${data.token}`;
+
+      dispatch({ type: LOGIN_SUCCESS, payload: data });
+      console.log("total data",data.data);
+      if (data.status === 200 )
+      {
+        
+        localStorage.setItem('userType', data.data.user_type);
+        localStorage.setItem('token', data.data.token);
+        localStorage.setItem('name', data.data.username);
+         // const storedToken =localStorage.getItem('token')
+         //    axios.defaults.headers.common['Authorization'] =`${storedToken}`;
+         console.log("local storage data in action ========>")
+         console.log(localStorage.getItem('userType'));
+         console.log(localStorage.getItem('token'));
+         console.log(localStorage.getItem('name'));
+          if(localStorage.getItem('userType') === 'volunteer') 
+          {    
+          navigate('/VolunteerData');
+          } 
+          else
+          {
+            navigate('/LeadData');
+          }
+     }
+    } catch (error) {
+      dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }
   };
 };

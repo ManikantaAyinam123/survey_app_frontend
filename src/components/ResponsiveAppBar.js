@@ -26,8 +26,10 @@ const ResponsiveAppBar = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userType');
+        localStorage.removeItem('name');
         console.log("this is token after logout",localStorage.getItem('token'))
         console.log("this is usertype after logout",localStorage.getItem('userType'))
+        console.log("this is usertype after logout",localStorage.getItem('name'))
         navigate('/');
     };
 

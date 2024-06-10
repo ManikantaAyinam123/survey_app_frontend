@@ -5,6 +5,7 @@ import searchByNameReducer from './searchByNameReducer';
 import filterByCastedStatusReducer from './filterByCastedStatusReducer';
 import constituencyNameReducer from './constituencyNameReducer';
 import boothNameReducer from './boothNameReducer';
+import loginReducer from './loginReducer';
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
    filterByCastedStatusReducer,
    constituencyNameReducer,
    boothNameReducer,
+   loginReducer,
 });
 
 export default rootReducer;

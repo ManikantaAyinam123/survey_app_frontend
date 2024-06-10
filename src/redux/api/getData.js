@@ -1,24 +1,45 @@
 import axios from 'axios';
+import API from "../../API/API";
+const api = new API();
+const all_voters = "voters";
 
-const all_voters = "http://localhost:3000/voters";
+const login = "auth/login";
+
+// const all_voters = "http://localhost:3000/voters";
 const search_by_name = "http://localhost:3000/voters/search_by_name";
 const filter_casted_status = "http://localhost:3000/voters/filter_casted_status";
 const baseURL = 'http://localhost:3000/voters';
 const consistency_names_url = "http://localhost:3000/voters/search_by_constituency";
 const booth_names_url = "http://localhost:3000/voters/search_by_booth_name";
 
-export const fetchAllVotersData = async (page,boothName) => {
+// export const fetchAllVotersData = async (page,boothName) => {
 
-   console.log("apinames in allvoters",boothName)
-  try {
-    const response = await axios.get(`${all_voters}?booth_name=${boothName}&page=${page}`);
-    const data = response.data;
-    console.log("thisis api data",data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching all voters data:', error);
-    throw error;
-  }
+//    console.log("apinames in allvoters",boothName)
+//   try {
+//     const response = await axios.get(`${all_voters}?booth_name=${boothName}&page=${page}`);
+//     const data = response.data;
+//     console.log("thisis api data",data);
+//     return data;
+//   } catch (error) {
+//     console.error('Error fetching all voters data:', error);
+//     throw error;
+//   }
+// };
+
+
+
+export const fetchAllVotersData = async (page,boothName) => {
+  console.log("apinames in allvoters",boothName)
+  return new Promise(async (resolve, reject) => {
+    try {
+        const result = await axios.get(`${all_voters}?booth_name=${boothName}&page=${page}`);
+      console.log("all voters data api:", result);
+      resolve(result);  
+    } catch (error) {
+      console.error("Error in allvoters API call:", error);
+      reject(error);  // Ensure reject is called with the error
+    }
+  });
 };
 
 export const searchByNameData = async (name,boothName) => {
@@ -85,5 +106,37 @@ export const fetchBoothNamesData = async (name) => {
     throw error;
   }
 };
+
+// export const loginData = async(formdata) =>{
+//   try {
+//     console.log("formdata in api ",formdata)
+//     const response = await axios.post('http://localhost:3000/auth/login', formdata);
+
+//       const data = response.data;
+//       console.log("data getting from api in api file",data)
+//     return data;
+//   } catch (error) {
+//     console.error('error fectching login data:', error);
+//     throw error;
+//   }
+// };
+
+
+
+export const loginData = async (formData) => {
+  console.log("Starting login API call with formData:", formData);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await api.post(`${login}`, formData);
+      console.log("Login API response:", result);
+      resolve(result);  // Ensure resolve is called with the result
+    } catch (error) {
+      console.error("Error in login API call:", error);
+      reject(error);  // Ensure reject is called with the error
+    }
+  });
+};
+
+
 
 

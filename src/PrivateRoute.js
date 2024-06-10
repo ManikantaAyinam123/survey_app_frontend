@@ -17,6 +17,7 @@ const PrivateRoute = ({ element: Component, allowedRoles }) => {
   }
 
   return isAuthorized ? (
+    
     <Component />
   ) : (
     <Box
