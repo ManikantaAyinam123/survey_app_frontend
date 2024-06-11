@@ -102,7 +102,7 @@ class API {
           } else if (err?.status === 422) {
             toast.error(`${error.response.data.errors}`);
           } else {
-            toast.error("An error occurred");
+            console.log("An error occurred");
           }
 
           reject(error);  // Ensure the error is propagated

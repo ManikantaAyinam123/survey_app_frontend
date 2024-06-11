@@ -19,9 +19,12 @@ export const fetchAllVotersAction = (page = 1,boothName) => {
     dispatch({ type: FETCH_ALL_VOTERS_REQUEST });
     try {
       const data = await fetchAllVotersData(page,boothName);
+       console.log("api",data)
       dispatch({ type: FETCH_ALL_VOTERS_SUCCESS, payload: data });
+        console.log("redux fetch",data)
     } catch (error) {
       dispatch({ type: FETCH_ALL_VOTERS_FAILURE, payload: error.message });
+
     }
   };
 };
@@ -89,7 +92,9 @@ export const fetchBoothNamesAction = (name) => {
     dispatch({ type: FETCH_BOOTH_NAMES_REQUEST });
     try {
       const data = await fetchBoothNamesData(name);
+      console.log("booth data -->",data)
       dispatch({ type: FETCH_BOOTH_NAMES_SUCCESS, payload: data });
+      console.log("redux booth name -->",data)
     } catch (error) {
       dispatch({ type: FETCH_BOOTH_NAMES_FAILURE, payload: error.message });
     }

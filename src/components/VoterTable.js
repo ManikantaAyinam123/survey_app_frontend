@@ -39,12 +39,13 @@ const VoterTable = ({ voters }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const handleSubmit = () => {
     const figuredBy = localStorage.getItem('name');
-    const { voter_name, age, sex, state, constituency, party, casted, figured_by } = formData;
-    const updatedFields = { voter_name, age, sex, state, constituency, party, casted, figured_by: figuredBy };
+    const { voter_name, age, gender, house_number, mobile_No, booth_name, casted, figured_by } = formData;
+    const updatedFields = { voter_name, age, gender, house_number, mobile_No, booth_name, casted, figured_by: figuredBy };
 
     dispatch(updateVoterAction(selectedVoter.id, { voter: updatedFields }));
     setOpen(false);
@@ -94,7 +95,7 @@ const VoterTable = ({ voters }) => {
                 <TableCell>{voter.age}</TableCell>
                 <TableCell>{voter.gender}</TableCell>
                 <TableCell>{voter.house_number}</TableCell>
-                <TableCell>{voter.mobile_No}</TableCell>
+                <TableCell>{voter.mobile_number}</TableCell>
                 <TableCell>{voter.booth_name}</TableCell>
                 <TableCell>{voter.casted ? "Yes" : "No"}</TableCell>
                 <TableCell>{voter.figured_by}</TableCell>

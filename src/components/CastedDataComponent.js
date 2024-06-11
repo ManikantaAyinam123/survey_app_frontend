@@ -13,7 +13,7 @@ const CastedDataComponent = ({ section,constituencyName, boothName }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(filterByCastedStatusAction(true, page,constituencyName, boothName));
+    dispatch(filterByCastedStatusAction(true, page, boothName));
     console.log("useEffect triggered with page:", page);
   }, [dispatch, page,constituencyName, boothName]); 
 

@@ -17,9 +17,12 @@ const VolunteerData = () => {
   const [filteredVoters, setFilteredVoters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedBoothInAutocomplete, setSelectedBoothInAutocomplete] = useState('');
-  const boothNames = useSelector((state) => state.boothNameReducer?.names || []);
+  const boothNames = useSelector((state) => state.boothNameReducer?.data || []);
+  console.log("boothnames",boothNames)
   const [booth, setBooth] = useState('');
   const voters = useSelector((state) => state.searchByNameReducer?.data);
+
+
 
   useEffect(() => {
     if (booth.trim() !== '') {
@@ -37,8 +40,9 @@ const VolunteerData = () => {
     }
   }, [voters]);
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
     setLoading(true);
+    setSearchName(e.target.value)
     dispatch(searchByNameAction(searchName, selectedBoothInAutocomplete));
     setSearched(true);
   };
@@ -50,6 +54,7 @@ const VolunteerData = () => {
   };
 
   const handleInputBoothChange = (event) => {
+    console.log(event.target.value);
     setBooth(event.target.value);
   };
 
@@ -59,31 +64,34 @@ const VolunteerData = () => {
         <Grid item >
           <Box sx={{ borderRadius: '7px', backgroundColor: "white", padding: '2px 5px' }}>
             <Autocomplete
-              disablePortal
-              size="small"
-              id="combo-box-demo"
-              options={boothNames}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField
+                disablePortal
+                size="small"
+                id="combo-box-demo"
+                options={boothNames}
+                sx={{ width: 300 }}
+                renderInput={(params) => {
+                console.log("params", params);
+                setSelectedBoothInAutocomplete(params.inputProps.value);
+                console.log("setSelectedboothInAutocomplete usestate",selectedBoothInAutocomplete);
+                console.log("params from booth", params.inputProps.value);
+                return (
+                  <TextField 
                   onChange={handleInputBoothChange}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#888888",
-                      },
-                      "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#888888",
-                      },
-                      "& .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#888888",
-                      }
-                    }
-                  }}
-                  {...params} placeholder="Booth name"
-                />
-              )}
-            />
+                   sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#888888", 
+                  }
+                }
+              }}{...params} placeholder="Booth name"/>);
+                }}
+              />
           </Box>
         </Grid>
         <Grid item>
@@ -93,7 +101,7 @@ const VolunteerData = () => {
             variant="outlined"
             autoComplete="off"
             value={searchName}
-            onChange={(e) => setSearchName(e.target.value)}
+            onChange={handleSearch}
             InputProps={{
               endAdornment: <Icon icon="material-symbols-light:search" width="25" height="25" style={{ color: 'black' }} />,
             }}
@@ -111,37 +119,32 @@ const VolunteerData = () => {
             }}
           />
 
-          <Button
-            variant="contained"
-            onClick={handleSearch}
-            sx={{
-              backgroundColor: '#EE8832',
-              color: 'white',
-              fontWeight: 'bold',
-              '&:hover': {
-                backgroundColor: '#EE8832',
-                color: 'white',
-              },
-            }}
-          >
-            Search
-          </Button>
+         
         </Grid>
       </Grid>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        {loading ? (
-          <CircularProgress sx={{ color: '#EE8832' }} />
-        ) : searched && filteredVoters.length === 0 ? (
-          <img src="https://t4.ftcdn.net/jpg/05/86/21/03/360_F_586210337_WOGOw0l7raEB8F61Muc4hWbvVcyQdk9Z.jpg" alt="No Data" style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }} />
-        ) : searched && filteredVoters.length > 0 ? (
-          <VoterTable voters={filteredVoters} handleClear={handleClear} />
-        ) : (
-          <Typography sx={{ letterSpacing: '1.2px', fontWeight: 'bold', fontSize: '20px' }}>Enter input to search</Typography>
-        )}
-      </Box>
+       
+      {selectedBoothInAutocomplete && (
+        <>
+          {searchName.trim() !== '' ? (
+            filteredVoters?.length === 0 ? (
+              <Typography variant="h6" sx={{ marginTop: 2 }}>
+                No data available
+              </Typography>
+            ) : (
+              <VoterTable voters={filteredVoters} />
+            )
+          ) : (
+            <NotCastedDataComponent boothName={selectedBoothInAutocomplete} />
+          )}
+        </>
+      )}
+       
+    
     </Box>
   );
 };
 
 export default VolunteerData;
+ 
+ 

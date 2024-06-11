@@ -6,7 +6,7 @@ import {
 
 const initialBoothNamesState = {
   loading: false,
-  names: [],
+  data: [], // Ensure this is initialized as an array
   error: null,
 };
 
@@ -15,7 +15,8 @@ const boothNameReducer = (state = initialBoothNamesState, action) => {
     case FETCH_BOOTH_NAMES_REQUEST:
       return { ...state, loading: true, error: null };
     case FETCH_BOOTH_NAMES_SUCCESS:
-      return { ...state, loading: false, names: action.payload, error: null };
+      console.log("Booth Names Fetch Success: ", action.payload);
+      return { ...state, loading: false, data: action.payload || [] }; // Ensure it's an array
     case FETCH_BOOTH_NAMES_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
