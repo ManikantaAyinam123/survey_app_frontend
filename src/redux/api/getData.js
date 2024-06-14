@@ -63,7 +63,7 @@ export const searchByNameData = async (name,boothName) => {
   return new Promise(async (resolve, reject) => {
     try {
         
-    const result = await api.get(`${search_by_name}?voter_name=${name}&booth_name=${boothName}`);
+    const result = await api.get(`${search_by_name}?booth_name=${boothName}&voter_name=${name}`);
       console.log("search by name:", result);
       const data = result?.data
       resolve(data);  

@@ -100,7 +100,7 @@ class API {
           if (err?.status === 401) {
             toast.error(`${errData.errors}`);
           } else if (err?.status === 422) {
-            toast.error(`${error.response.data.errors}`);
+            console.log(`${error.response.data.errors}`);
           } else {
             console.log("An error occurred");
           }
